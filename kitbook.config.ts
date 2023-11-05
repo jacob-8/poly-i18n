@@ -1,8 +1,8 @@
 import { defineConfig } from 'kitbook/defineConfig'
 
 export default defineConfig({
-  title: 'Kitbook Template',
-  description: 'Svelte Component Documentation and Prototyping Workbench built using SvelteKit',
+  title: 'Poly I18n',
+  description: 'Do-it-yourself, simple, framework agnostic i18n with type safety in under 100 lines.',
   viewports: [
     {
       name: 'Mobile',
@@ -25,6 +25,6 @@ export default defineConfig({
   //     code: 'es',
   //   },
   // ],
-  githubURL: 'https://github.com/jacob-8/kitbook/tree/main/packages/template',
+  githubURL: 'https://github.com/jacob-8/poly-i18n',
   expandTree: true,
 })

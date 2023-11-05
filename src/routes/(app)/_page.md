@@ -1,1 +1,0 @@
-Documentation and page stories for colocated route can be placed here
