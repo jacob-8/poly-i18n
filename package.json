@@ -1,0 +1,27 @@
+{
+  "name": "poly-i18n",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+    "test:components": "playwright test kitbook",
+    "test:components:update": "playwright test kitbook --update-snapshots",
+    "check-packages": "pnpm update --interactive --recursive --latest"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.39.0",
+    "@sveltejs/adapter-auto": "2.1.1",
+    "@sveltejs/kit": "1.27.3",
+    "kitbook": "latest",
+    "svelte": "^4.2.2",
+    "svelte-check": "^3.5.2",
+    "tslib": "^2.6.2",
+    "typescript": "~5.2.2",
+    "vite": "^4.5.0"
+  }
+}

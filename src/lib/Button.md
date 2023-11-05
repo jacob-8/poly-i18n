@@ -1,0 +1,1 @@
+A little documentation about this component goes **here**.
