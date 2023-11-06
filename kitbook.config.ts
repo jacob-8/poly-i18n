@@ -35,6 +35,6 @@ export default defineConfig({
     params.set('lang', code)
     return `${path}?${params.toString()}`
   },
-  githubURL: 'https://github.com/jacob-8/poly-i18n',
+  githubURL: 'https://github.com/jacob-8/poly-i18n/tree/main',
   expandTree: true,
 })
