@@ -10,12 +10,12 @@
 </script>
 
 <div style="display: flex; border-bottom: 1px solid black; padding: 8px 0;">
-  <div style="font-weight: bold; flex-grow: 1;">
+  <a href="/" style="font-weight: bold; flex-grow: 1;">
     poly-i18n
-  </div>
+  </a>
   <div>
     {#each locales as [code, name]}
-      <button type="button" style="padding: 0 4px;" class:active={$page.data.locale === code} on:click={() => changeLocale(code, $page.url)}>{name}</button>
+      <button type="button" style="padding: 0 4px;" class:active={$page.data.locale === code} on:click={() => changeLocale(code, $page.url.href)}>{name}</button>
     {/each}
   </div>
 </div>
