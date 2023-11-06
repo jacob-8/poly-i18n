@@ -98,7 +98,7 @@ export async function getTranslator(locale: LocaleCode) {
     console.warn(`Missing ${locale} translation for ${key}`)
 
     // @ts-expect-error - same issue as above
-    const fallbackResult = loadedTranslations.en[section][item]
+    const fallbackResult = loadedTranslations.en[section]?.[item]
     if (fallbackResult)
       return interpolate(fallbackResult, options?.values)
 
