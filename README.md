@@ -20,7 +20,7 @@ Do-it-yourself, simple, framework agnostic i18n with type safety in under 100 li
 
 I use [`svelte-i18n`](https://github.com/kaisermann/svelte-i18n) and recently started multilingual [screenshot regression testing](https://kitbook.vercel.app/docs/7-visual-regression-testing) using Kitbook and from a large number of flaky tests solely due to showing the wrong language at random times the underlying race condition problem in the current i18n offerings for SvelteKit became obvious. Previously I only noticed it every few months, but as our user base grew more reports came in about the funny language flashes as the client hydrates and switches to the correct language.
 
-The problem lies in the way [`svelte-i18n`](https://github.com/kaisermann/svelte-i18n)'s default usage uses [shared state on the server (a bad idea in SvelteKit)](https://kit.svelte.dev/docs/state-management#avoid-shared-state-on-the-server) is causing lots of race condition issues as requests from 11 different languages come in all at once. There is a [workaround](https://github.com/kaisermann/svelte-i18n/issues/165#issuecomment-1784214747) that would be implemented like this:
+The problem lies in the way [`svelte-i18n`](https://github.com/kaisermann/svelte-i18n)'s uses shared state on the server. [This is a bad idea in SvelteKit](https://kit.svelte.dev/docs/state-management#avoid-shared-state-on-the-server) because it is causing lots of race condition issues as requests from 11 different languages come in all at once. There is a [workaround](https://github.com/kaisermann/svelte-i18n/issues/165#issuecomment-1784214747) that would be implemented like this:
 
 ```svelte
 <script lang="ts">
