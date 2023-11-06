@@ -9,7 +9,7 @@
   export let data
 </script>
 
-<div style="display: flex; border-bottom: 1px solid black; padding: 8px 0;">
+<div style="display: flex; border-bottom: 1px solid black; padding: 8px;">
   <div style="font-weight: bold; flex-grow: 1;">
     poly-i18n
   </div>
@@ -20,16 +20,21 @@
   </div>
 </div>
 
-<i>Translated hello.world</i> {$page.data.t("hello.world")}<br />
-<i>Fallbacked fruit.banana</i> {$page.data.t("fruit.banana")}<br />
-<i>Interpolated hello.person</i> {$page.data.t("hello.person", { values: { name: "John" } })}<br />
+<div style="padding: 8px;">
+  <i>Translated hello.world</i> {$page.data.t("hello.world")}<br />
+  <i>Fallbacked fruit.banana</i> {$page.data.t("fruit.banana")}<br />
+  <i>Interpolated hello.person</i> {$page.data.t("hello.person", { values: { name: "John" } })}<br />
 
-{#if data?.dynamicKey}
-  <i>Dynamic key</i> {data.dynamicKey} {$page.data.t(data.dynamicKey)}<br />
-{/if}
+  {#if data?.dynamicKey}
+    <i>Dynamic key</i> {data.dynamicKey} {$page.data.t(data.dynamicKey)}<br />
+  {/if}
 
-<br />
-<button type="button" on:click={sayHi}>{$page.data.t("say.hi")}</button><br />
+  <br />
+  <button type="button" on:click={sayHi}>{$page.data.t("say.hi")}</button><br />
+
+  <br />
+  <a href="/kitbook" style="font-weight: bold;">Read the docs >></a>
+</div>
 
 <style>
   .active {
