@@ -4,10 +4,10 @@ Do-it-yourself, simple, framework agnostic i18n with type safety in under 100 li
 
 ## Features
 
-✅ Minimal - less than 100 lines of code not counting your project setup (desired locales and translation strings). It's not a library, just copy-paste into your project and use what you need\
+✅ Minimal - less than 100 lines of code. It's not a library, just copy-paste into your project and adjust to your needs\
 ✅ SSR safe: does not use shared server side stores to fix the race condition problems of [`svelte-i18n`](https://github.com/kaisermann/svelte-i18n), [`svelte-intl-precompile`](https://github.com/cibernox/svelte-intl-precompile) and [`sveltekit-i18n`](https://github.com/sveltekit-i18n)\
-✅ Each server instance only loads translations once, the first time they are needed. They next time they are needed, they are already in memory\
-✅ Platform agnostic - built for SvelteKit, but works anywhere\
+✅ Efficient: Each server instance only loads translations the first time they are needed. They next time they are needed, they are already in memory\
+✅ Platform agnostic: built for SvelteKit, but works anywhere\
 ✅ Use local data or a remote API for translation strings - you write the file import\
 ✅ Type-safe translation strings without a build step if using local data, you will get TS errors if you enter an invalid key or have a missing translation string\
 ✅ Use a fallback locale to progressively translate your site\
@@ -39,6 +39,4 @@ Then [`svelte-intl-precompile`](https://github.com/cibernox/svelte-intl-precompi
 
 After looking through each, I realized they all contained a lot of code not applicable to my project, none are designed to be used in a method that instantiates a new instance for each request, and that the i18n code needed to handle my i18n needs was really quite simple, less than 100 lines. Take a look and see if it's what you need for your project.
 
-## TODO
-
-Bilingual language support to show two languages side-by-side for language learners who are jumping to a new language
+[Get started >>](/kitbook/docs/0-set-locales)

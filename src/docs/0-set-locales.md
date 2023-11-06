@@ -1,6 +1,6 @@
 # Set up Locales
 
-Our first step is to do what we would do with any i18n library: set up locales and translation files.
+Start with what you do with any i18n library: set up locales and translation files.
 
 ## Define supported Locales
 

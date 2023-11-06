@@ -1,0 +1,1 @@
+This page will be more interesting if you turn on all three languages using the language selector in the sidebar.
