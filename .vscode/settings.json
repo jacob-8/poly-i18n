@@ -1,0 +1,14 @@
+{
+  // Kitbook
+  "files.associations": {
+    "*.composition": "svelte"
+  },
+  "foam.completion.label": "title",
+  "foam.edit.linkReferenceDefinitions": "withExtensions",
+  "foam.files.ignore": [
+    "**/node_modules/**/*",
+    "**/.svelte-kit/**/*",
+    "**/dist/**/*"
+  ],
+  "foam.files.notesExtensions": "composition",
+}

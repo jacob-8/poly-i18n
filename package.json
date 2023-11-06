@@ -11,6 +11,7 @@
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "test:components": "playwright test kitbook",
     "test:components:update": "playwright test kitbook --update-snapshots",
+    "test": "vitest",
     "check-packages": "pnpm update --interactive --recursive --latest"
   },
   "devDependencies": {
@@ -22,6 +23,7 @@
     "svelte-check": "^3.5.2",
     "tslib": "^2.6.2",
     "typescript": "~5.2.2",
-    "vite": "^4.5.0"
+    "vite": "^4.5.0",
+    "vitest": "^0.34.6"
   }
 }

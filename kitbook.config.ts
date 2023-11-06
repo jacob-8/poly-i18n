@@ -15,16 +15,26 @@ export default defineConfig({
       height: 1024,
     },
   ],
-  // languages: [
-  //   {
-  //     name: 'English',
-  //     code: 'en',
-  //   },
-  //   {
-  //     name: 'Spanish',
-  //     code: 'es',
-  //   },
-  // ],
+  languages: [
+    {
+      name: 'English',
+      code: 'en',
+    },
+    {
+      name: 'Español',
+      code: 'es',
+    },
+    {
+      name: 'עברית',
+      code: 'he',
+    },
+  ],
+  addLanguageToUrl: ({ code, url }) => {
+    const [path, search] = url.split('?')
+    const params = new URLSearchParams(search)
+    params.set('lang', code)
+    return `${path}?${params.toString()}`
+  },
   githubURL: 'https://github.com/jacob-8/poly-i18n',
   expandTree: true,
 })
