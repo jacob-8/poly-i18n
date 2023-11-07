@@ -2,6 +2,8 @@
 
 Do-it-yourself, simple, framework agnostic i18n with type safety in under 100 lines. [Try it out](https://poly-i18n.vercel.app), learn how to [get started](/kitbook/docs/0-set-locales) or [play with it in Stackblitz](https://stackblitz.com/github/jacob-8/poly-i18n).
 
+![Type safety and intellisense](/type-safety.png)
+
 ## Features
 
 ✅ Minimal - less than 100 lines of code. It's not a library, just copy-paste into your project and adjust to your needs\
