@@ -63,6 +63,33 @@ export async function getTranslator(locale: LocaleCode) {
 }
 ```
 
+## Use actual translations in unit tests
+
+With the setup used in `poly-i18n` you can easily use the actual translations in your unit tests. For example, I have a function that transforms incoming parts of speech keys in database data into a shape usable through the UI without having to translate these everywhere they show up. This enable the UI to just receive the values and show them. Here's a simplified example:
+
+```ts title="translateSemanticDomains.ts"
+import type { TranslateFunction } from '$lib/i18n/types';
+import { en } from '$lib/i18n';
+
+export function translateSemanticDomains(semanticDomainKey: string, t: TranslateFunction) {
+  return t({ dynamicKey: `semanticDomain.${semanticDomainKey}`, fallback: semanticDomainKey })
+}
+
+if (import.meta.vitest) {
+  describe(translateSemanticDomains, () => {
+    const t = ((key: string) => {
+      const [section, item] = key.split('.')
+      return en[section][item];
+    }) as TranslateFunction
+
+    it('translates key into word', () => {
+      const result = translateSemanticDomains('n', t)
+      expect(result).toEqual('noun')
+    })
+  })
+}
+```
+
 
 ## Bilingual language support (WIP on branch)
 
