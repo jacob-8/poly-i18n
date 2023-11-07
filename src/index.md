@@ -39,6 +39,6 @@ Then [`svelte-intl-precompile`](https://github.com/cibernox/svelte-intl-precompi
 
 [`sveltekit-i18n`](https://github.com/sveltekit-i18n) also has the [same problem](https://github.com/sveltekit-i18n/lib/issues/106) if implemented as instructed. The [solution](https://github.com/sveltekit-i18n/lib/issues/106#issuecomment-1535196388) there is also to instantiate a new instance for each request.
 
-After looking through each, I realized they all contained a lot of code not applicable to my project, none are designed to be used in a method that instantiates a new instance for each request, and that the i18n code needed to handle my i18n needs was really quite simple, less than 100 lines. Take a look and see if it's what you need for your project.
+After looking through each, I realized they all contained a lot of code not applicable to my project, none are designed to be used in a method that instantiates a new instance for each request, and that the i18n code needed to handle my i18n needs was really quite simple, less than 100 lines. Take a look and see if it's what you need for your project. The hope is that this project can foster greater understanding of i18n in SvelteKit and spur all libraries going forward to isolate locale choice by request.
 
 [Get started >>](/kitbook/docs/0-set-locales)
