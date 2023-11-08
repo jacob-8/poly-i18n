@@ -30,17 +30,27 @@ export function getSupportedLocale(userLocale: string | undefined): LocaleCode {
 
 Then add translation strings by creating a file for each locale you support. In this example we will support `en` and `es`.
 
-```ts title="lib/poly-i18n/locales/en.js"
-export default {
-  hello: {
-    world: 'Hello world!',
-  },
+```json title="lib/poly-i18n/locales/en.json"
+{
+  "hello": {
+    "world": "Hello world!"
+  }
 }
 ```
 
-Since English is our base language, when we create another language we can add type safety with one line:
+Then add another language:
 
-```ts title="lib/poly-i18n/locales/es.js" {1}
+```json title="lib/poly-i18n/locales/es.json"
+{
+  "hello": {
+    "world": "¡Hola mundo!"
+  }
+}
+```
+
+I initially used `.js` files for type-safety and then realized that I can get type-safety with `.json` files too, and `.json` works with i18n-ally. So I switched, but if you don't care about the extension you might consider using `.js` files because when we create another language we can add type safety with one line:
+
+```js title="lib/poly-i18n/locales/es.js" {1}
 /** @type {typeof import('./en.js').default} */
 export default {
   hello: {
@@ -49,14 +59,14 @@ export default {
 }
 ```
 
-You may already have your translations in `json` files and you may automatically sync them from a spreadsheet or cloud translation service, but it should be easy to add `export default` (and the type) to the top of each file.
+But that's a moot point if you use any sort of automated system to generate your translations as they will use identical keys for each language.
 
 ## Translation key type-safety
 
-We can also use our `en.js` file to give us some nice intellisense and type-checking as we use our translation keys in our app. Let's create a `TranslationKeys` type:
+We can also use our `en.json` file to give us some nice intellisense and type-checking as we use our translation keys in our app. Let's create a `TranslationKeys` type:
 
 ```ts title="lib/poly-i18n/types.ts"
-import type en from './locales/en'
+import type en from './locales/en.json'
 
 export type TranslationKeys = Flatten<TranslationKeysNested>
 
