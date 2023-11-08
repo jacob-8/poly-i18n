@@ -7,6 +7,7 @@ declare global {
 		interface PageData {
       t: Awaited<ReturnType<typeof import('$lib/poly-i18n').getTranslator>>;
       locale: import('$lib/poly-i18n/locales').LocaleCode;
+			i18n: Awaited<ReturnType<typeof import('$lib/poly-i18n').getDirectTranslator>>;
     }
 		// interface Platform {}
 	}
