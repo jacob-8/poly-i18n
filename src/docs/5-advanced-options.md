@@ -27,7 +27,28 @@ export function getSupportedLocale(userLocale: string | undefined) {
 
 ## Right-to-left support
 
-Check the [source code](https://github.com/jacob-8/poly-i18n) for `page.dir` to learn how.
+```svelte title="src/routes/+layout.svelte"
+<script>
+  import { page } from "$app/stores";
+</script>
+
+<div dir={$page.data.t('page.dir')}>
+  <slot />
+</div>
+```
+
+## Set page lang tag
+
+```svelte title="src/routes/+layout.svelte" {5}
+<script>
+  import { browser } from "$app/environment";
+  import { page } from "$app/stores";
+
+  $: if (browser) document.documentElement.lang = $page.data.locale;
+</script>
+
+<slot />
+```
 
 ## Dynamic Keys
 
