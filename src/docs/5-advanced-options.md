@@ -90,6 +90,49 @@ if (import.meta.vitest) {
 }
 ```
 
+## Direct/keyed method
+
+If you only use translation strings without any interpolation features, you're in a great position to try an even more powerful method that gives you the ability to click directly to your source translation files from usage without needing any editor extension. It looks like this:
+
+![direct autocomplete](/direct-autocomplete.png)
+
+To get this working, you can simplify your `getTranslator` function to look like this:
+
+```ts title="lib/poly-i18n/index.ts"
+export async function getTranslator(locale: LocaleCode) {
+  if (locale === 'en')
+    return en
+
+  if (!loadedTranslations[locale])
+    loadedTranslations[locale] = await import(`./locales/${locale}.json`)
+
+  return merge({ fallback: en, translation: loadedTranslations[locale]})
+}
+```
+
+That merge function looks like this:
+
+```ts title="lib/poly-i18n/merge.ts"
+import type en from './locales/en.json'
+
+export function merge({fallback, translation}: {fallback: Record<string, any>, translation: Record<string, any>}) {
+  const result = { ...fallback };
+
+  Object.keys(translation).forEach(key => {
+    if (translation[key] && typeof translation[key] === 'object') {
+      result[key] = merge({fallback: result[key] || {}, translation: translation[key]});
+    } else if (translation[key]) {
+      result[key] = translation[key];
+    }
+  });
+
+  return result as typeof en;
+}
+```
+
+If you don't need a fallback, just skip the merge function and return the translation directly.
+
+Now you can use `$page.data.t.hello.world` instead of `$page.data.t('hello.world)`. This repo actually demoes both methods, so you'll see that I have named the value for this direct method as `i18n` and so use it as `$page.data.i18n.hello.world`.
 
 ## Bilingual language support (WIP on branch)
 

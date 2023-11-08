@@ -22,16 +22,19 @@
 
 <div style="padding: 8px;">
   <i>Translated hello.world</i> {$page.data.t("hello.world")}<br />
-  <i>Direct hello.world</i> {$page.data.i18n.hello.world}<br />
   <i>Fallbacked fruit.banana</i> {$page.data.t("fruit.banana")}<br />
   <i>Interpolated hello.person</i> {$page.data.t("hello.person", { values: { name: "John" } })}<br />
-
+  
   {#if data?.dynamicKey}
-    <i>Dynamic key</i> {data.dynamicKey} {$page.data.t(data.dynamicKey)}<br />
+  <i>Dynamic key</i> {data.dynamicKey} {$page.data.t(data.dynamicKey)}<br />
   {/if}
-
+  
   <br />
   <button type="button" on:click={sayHi}>{$page.data.t("say.hi")}</button><br />
+  <br />
+  
+  <i>direct/keyed method (`$page.data.i18n.hello.world`)</i>: {$page.data.i18n.hello.world}<br />
+  <i>direct/keyed method needing fallback</i> {$page.data.i18n.hello.person}<br />
 
   <br />
   <a href="/kitbook" style="font-weight: bold;">Read the docs >></a>

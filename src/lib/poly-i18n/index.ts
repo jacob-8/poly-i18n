@@ -3,6 +3,7 @@ import type { LocaleCode } from './locales'
 import type { TranslationKeys } from './types'
 import { interpolate } from './interpolate'
 import { dev } from '$app/environment'
+import { merge } from './merge'
 
 const loadedTranslations: Record<string, typeof en> = {
   en, // start with default language, don't lazy load because I know I want it as a fallback
@@ -38,12 +39,13 @@ export async function getTranslator(locale: LocaleCode) {
   }
 }
 
-export async function getDirectTranslator(locale: LocaleCode): Promise<typeof import('./locales/es.json')> {
+// Optional alternative to the above method if you don't need any interpolation features
+export async function getDirectTranslator(locale: LocaleCode) {
   if (locale === 'en')
     return en
 
   if (!loadedTranslations[locale])
     loadedTranslations[locale] = await import(`./locales/${locale}.json`)
 
-  return loadedTranslations[locale]
+  return merge({ fallback: en, translation: loadedTranslations[locale]})
 }
