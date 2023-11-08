@@ -5,7 +5,7 @@ Using the locales and formatting features we've already added you can  build a f
 Start by importing your default language and creating a `loadingTranslations` which will serve to cache translations on the server as they are used. This way each server will only need to load translations once, regardless of how many user requests come in.
 
 ```ts title="lib/poly-i18n/index.ts"
-import en from './locales/en'
+import en from './locales/en.json'
 
 const loadedTranslations: Record<string, typeof en> = {
   en, // start with default language, don't lazy load because I know I want it as a fallback
@@ -21,7 +21,7 @@ import type { LocaleCode } from './locales'
 
 export async function getTranslator(locale: LocaleCode) {
   if (!loadedTranslations[locale])
-    loadedTranslations[locale] = (await import(`./locales/${locale}.js`)).default
+    loadedTranslations[locale] = (await import(`./locales/${locale}.json`)).default
 
   return (key) => 'todo'
 }
@@ -71,7 +71,7 @@ return (key: TranslationKeys, options?: { values?: Record<string, string> }): st
 Let's put it all together:
 
 ```ts title="lib/poly-i18n/index.ts"
-import en from './locales/en'
+import en from './locales/en.json'
 import type { LocaleCode } from './locales'
 import type { TranslationKeys } from './types'
 import { interpolate } from './interpolate'
@@ -83,7 +83,7 @@ const loadedTranslations: Record<string, typeof en> = {
 
 export async function getTranslator(locale: LocaleCode) {
   if (!loadedTranslations[locale])
-    loadedTranslations[locale] = (await import(`./locales/${locale}.js`)).default
+    loadedTranslations[locale] = (await import(`./locales/${locale}.json`)).default
 
   return (key: TranslationKeys, options?: { values?: Record<string, string> }): string => {
     if (!key.includes('.'))

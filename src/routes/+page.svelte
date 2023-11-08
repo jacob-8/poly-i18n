@@ -22,6 +22,7 @@
 
 <div style="padding: 8px;">
   <i>Translated hello.world</i> {$page.data.t("hello.world")}<br />
+  <i>Direct hello.world</i> {$page.data.i18n.hello.world}<br />
   <i>Fallbacked fruit.banana</i> {$page.data.t("fruit.banana")}<br />
   <i>Interpolated hello.person</i> {$page.data.t("hello.person", { values: { name: "John" } })}<br />
 

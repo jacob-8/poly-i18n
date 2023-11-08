@@ -2,37 +2,38 @@
 
 In SvelteKit we eliminate race conditions by not sharing state using a store server-side. So we must create a `getTranslator` function per request based on locale.
 
-## Get desired locale on server
+## Get desired locales from cookies and request headers on server
 
-There are three common methods employed to detect a user's desired locale. On the server you can use a root `+layout.server.ts` to check for a `locale` cookie (you set this when users switch the language in your app), and also check the language settings for the user's browser found in the `accept-language` header.
+There are three common methods employed to detect a user's desired locale. On the server you can use a root `+layout.server.ts` to first check the language settings for the user's browser found in the `accept-language` header and also check for a `locale` cookie (you set this when users switch the language in your app).
 
 ```ts title="routes/+layout.server.ts"
 import type { LayoutServerLoad } from './$types'
 
 export const load: LayoutServerLoad = ({ cookies, request }) => {
-  const chosenLocale = cookies.get('locale')
   const acceptedLanguage = request.headers.get('accept-language')?.split(',')[0].trim()
-
-  return { serverLocale: chosenLocale || acceptedLanguage }
+  const chosenLocale = cookies.get('locale')
+  return { acceptedLanguage, chosenLocale }
 }
 ```
 
-## Get desired locale on client
+## Get desired locale from url on server/client
 
-Pass that information to the `+layout.ts` which runs both on server and client. In here you check the URL if your app stores the locale in the URL. Then you can use the locale information gathered to selected the appropriate locale that you support and create an instance of the translator functions using the methods you previously created.
+Pass that information to the `+layout.ts` which runs both on server and client. Here you check the URL if your app stores the locale in the URL. Then you can use the locale information gathered to selected the appropriate locale that you support and create an instance of the translator functions using the methods you previously created.
 
 ```ts title="routes/+layout.ts"
 import type { LayoutLoad } from './$types'
 import { getSupportedLocale } from '$lib/poly-i18n/locales'
 import { getTranslator } from '$lib/poly-i18n'
 
-export const load: LayoutLoad = async ({ url: { searchParams }, data: { serverLocale } }) => {
+export const load: LayoutLoad = async ({ data: { acceptedLanguage, chosenLocale }, url: { searchParams } }) => {
   const urlLocale = searchParams.get('lang')
-  const locale = getSupportedLocale(urlLocale || serverLocale)
+  const locale = getSupportedLocale(urlLocale || chosenLocale || acceptedLanguage)
   const t = await getTranslator({ locale })
   return { locale, t }
 }
 ```
+
+This order of preference is important. The URL is the most important, then a cookie which indicates a previous user decision, and finally the browser's language settings.
 
 ## Type your $page store
 

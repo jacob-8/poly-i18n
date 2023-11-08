@@ -1,4 +1,4 @@
-import en from './locales/en'
+import en from './locales/en.json'
 import type { LocaleCode } from './locales'
 import type { TranslationKeys } from './types'
 import { interpolate } from './interpolate'
@@ -10,7 +10,7 @@ const loadedTranslations: Record<string, typeof en> = {
 
 export async function getTranslator(locale: LocaleCode) {
   if (!loadedTranslations[locale])
-    loadedTranslations[locale] = (await import(`./locales/${locale}.js`)).default
+    loadedTranslations[locale] = await import(`./locales/${locale}.json`)
 
   return (key: TranslationKeys, options?: { values?: Record<string, string> }): string => {
     if (!key.includes('.'))
@@ -36,4 +36,14 @@ export async function getTranslator(locale: LocaleCode) {
     console.error(error)
     return key
   }
+}
+
+export async function getDirectTranslator(locale: LocaleCode): Promise<typeof import('./locales/es.json')> {
+  if (locale === 'en')
+    return en
+
+  if (!loadedTranslations[locale])
+    loadedTranslations[locale] = await import(`./locales/${locale}.json`)
+
+  return loadedTranslations[locale]
 }
