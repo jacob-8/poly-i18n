@@ -37,7 +37,11 @@ export function getSupportedLocale(userLocale: string | undefined) {
 </div>
 ```
 
+According to the "Text Direction" section of [T18S' SEO page](https://t18s.sigrist.dev/seo) there's a browser native way to do this but it requires checking for locale in your `src/hooks.server.js` file - this is trivial but so far I've avoided duplicating my locale checking between the server hooks file and `+layout.ts` for simplicity sake (it's optional in the server hooks file, but mandatory in `+layout.ts` as you need the locale checking page data setting to run on every client side url update which doesn't include the server hooks).
+
 ## Set page lang tag
+
+On the client do this:
 
 ```svelte title="src/routes/+layout.svelte" {5}
 <script>
@@ -49,6 +53,8 @@ export function getSupportedLocale(userLocale: string | undefined) {
 
 <slot />
 ```
+
+On the server you can do as described in the "On the Server" section of [T18S' SEO page](https://t18s.sigrist.dev/seo).
 
 ## Dynamic Keys
 
