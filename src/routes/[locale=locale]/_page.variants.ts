@@ -9,10 +9,7 @@ export const viewports: Viewport[] = [
 export const variants: Variant<Component>[] = [
   {
     props: {
-      //@ts-expect-error - not defining t and locale
-      data: {
-        dynamicKey: 'hello.world',
-      }
+      dynamicKey: 'hello.world',
     },
   },
   {
