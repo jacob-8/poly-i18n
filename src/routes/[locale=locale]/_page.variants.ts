@@ -1,5 +1,6 @@
 import type { Variant, Viewport } from 'kitbook'
 import type Component from './+page.svelte'
+import type { TranslationKeys } from '$lib/poly-i18n/types'
 
 export const viewports: Viewport[] = [
   { name: 'Mobile', width: 400, height: 300 },
@@ -16,7 +17,7 @@ export const variants: Variant<Component>[] = [
   },
   {
     name: 'Regional Variant (en-GB)',
-    description: 'default to basic locale: en',
+    description: 'defaults to closest matching locale (en) and keeps rest of the url route',
     languages: [{ code: 'en-GB', name: 'English (UK)' }],
   },
   {
@@ -24,10 +25,7 @@ export const variants: Variant<Component>[] = [
     description: 'Will throw an error on dev browser, but just console error on prod',
     languages: [],
     props: {
-      data: {
-        //@ts-expect-error - not defining t and locale and passing a broken key
-        dynamicKey: 'non.existent',
-      }
+      dynamicKey: 'non.existent' as TranslationKeys,
     },
   },
 ]
