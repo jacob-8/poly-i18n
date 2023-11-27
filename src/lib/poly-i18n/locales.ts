@@ -5,26 +5,53 @@ export enum Locales {
 }
 
 export type LocaleCode = keyof typeof Locales
+export const DEFAULT_LOCALE = 'en'
 
-export function getSupportedLocale(userLocale: string | undefined): LocaleCode {
+export function getSupportedLocale(userLocale: string | undefined): LocaleCode | undefined {
   const locale = Object.keys(Locales).find((supportedLocale) => {
     return userLocale?.includes(supportedLocale)
   }) as LocaleCode | undefined
-  return locale || 'en'
+  return locale
 }
 
 if (import.meta.vitest) {
   describe(getSupportedLocale, () => {
-    test('should return locale for supported locale', () => {
+    test('returns supported locale', () => {
       expect(getSupportedLocale('es')).toBe('es')
     })
 
-    test('should return default locale for unsupported locale', () => {
-      expect(getSupportedLocale('xx')).toBe('en')
+    test('returns undefined for unsupported locale', () => {
+      expect(getSupportedLocale('xx')).toBe(undefined)
     })
 
-    test('should return basic locale for locale with region code', () => {
+    test('returns basic locale for locale with region code', () => {
       expect(getSupportedLocale('en-US')).toBe('en')
+    })
+  })
+}
+
+export function findSupportedLocaleFromAcceptedLanguages(acceptedLanguageHeader: string | null) {
+  const locales = acceptedLanguageHeader
+    ?.split(',')
+    ?.map(lang => lang.split(';')[0].trim()) ?? []
+  for (const locale of locales) {
+    const supportedLocale = getSupportedLocale(locale)
+    if (supportedLocale)
+      return supportedLocale
+  }
+}
+
+if (import.meta.vitest) {
+  describe(findSupportedLocaleFromAcceptedLanguages, () => {
+    it('should return the first accepted language', () => {
+      expect(findSupportedLocaleFromAcceptedLanguages('en-US,en;q=0.9,zh-TW;q=0.8,zh;q=0.7')).toEqual('en')
+      expect(findSupportedLocaleFromAcceptedLanguages('es-br;q=0.8,en-US,en;q=0.6,')).toEqual('es')
+      expect(findSupportedLocaleFromAcceptedLanguages('zh-TW;q=0.8,zh;q=0.7,en-US,en;q=0.6,')).toEqual('en')
+    })
+
+    it('handles null header', () => {
+      const actual = findSupportedLocaleFromAcceptedLanguages(null)
+      expect(actual).toEqual(undefined)
     })
   })
 }
