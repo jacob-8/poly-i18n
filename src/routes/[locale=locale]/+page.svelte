@@ -3,19 +3,20 @@
   import { page } from "$app/stores";
   import { changeLocale } from "$lib/poly-i18n/changeLocale.js";
   import { Locales, type LocaleCode } from "$lib/poly-i18n/locales.js";
+  import type { TranslationKeys } from "$lib/poly-i18n/types";
 
   const locales = Object.entries(Locales) as [LocaleCode, Locales][];
 
-  export let data
+  export let dynamicKey = "hello.world" as TranslationKeys;
 </script>
 
-<div style="display: flex; border-bottom: 1px solid black; padding: 8px;">
-  <div style="font-weight: bold; flex-grow: 1;">
+<div style="display: flex; border-bottom: 1px solid black; padding: 8px 0;">
+  <a href="/" style="font-weight: bold; flex-grow: 1;">
     poly-i18n
-  </div>
+  </a>
   <div>
     {#each locales as [code, name]}
-      <button type="button" style="padding: 0 4px;" class:active={$page.data.locale === code} on:click={() => changeLocale(code, $page.url)}>{name}</button>
+      <button type="button" style="padding: 0 4px;" class:active={$page.data.locale === code} on:click={() => changeLocale(code, $page.url.href)}>{name}</button>
     {/each}
   </div>
 </div>
@@ -25,8 +26,8 @@
   <i>Fallbacked fruit.banana</i> {$page.data.t("fruit.banana")}<br />
   <i>Interpolated hello.person</i> {$page.data.t("hello.person", { values: { name: "John" } })}<br />
   
-  {#if data?.dynamicKey}
-  <i>Dynamic key</i> {data.dynamicKey} {$page.data.t(data.dynamicKey)}<br />
+  {#if dynamicKey}
+  <i>Dynamic key</i> {dynamicKey} {$page.data.t(dynamicKey)}<br />
   {/if}
   
   <br />
@@ -37,7 +38,7 @@
   <i>direct/keyed method needing fallback</i> {$page.data.i18n.hello.person}<br />
 
   <br />
-  <a href="/kitbook" style="font-weight: bold;">Read the docs >></a>
+  <a href="/en/kitbook" style="font-weight: bold;">Read the docs >></a>
 </div>
 
 <style>

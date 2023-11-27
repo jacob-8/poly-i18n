@@ -29,12 +29,8 @@ export default defineConfig({
       code: 'he',
     },
   ],
-  addLanguageToUrl: ({ code, url }) => {
-    const [path, search] = url.split('?')
-    const params = new URLSearchParams(search)
-    params.set('lang', code)
-    return `${path}?${params.toString()}`
-  },
-  githubURL: 'https://github.com/jacob-8/poly-i18n/tree/main',
+  addLanguageToUrl: ({ code, url }) => url.replace(/^.[^\/]+/, `/${code}`),  
+  kitbookRoute: '/[locale=locale]/kitbook',
+  githubURL: 'https://github.com/jacob-8/poly-i18n',
   expandTree: true,
 })
