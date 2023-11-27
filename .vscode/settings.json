@@ -11,4 +11,7 @@
     "**/dist/**/*"
   ],
   "foam.files.notesExtensions": "composition",
+  "i18n-ally.localesPaths": [
+    "src/lib/poly-i18n/locales"
+  ],
 }

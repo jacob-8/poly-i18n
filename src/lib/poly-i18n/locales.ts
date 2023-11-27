@@ -7,7 +7,7 @@ export enum Locales {
 export type LocaleCode = keyof typeof Locales
 export const DEFAULT_LOCALE = 'en'
 
-export function getSupportedLocale(userLocale: string | undefined): LocaleCode | undefined {
+export function getSupportedLocale(userLocale: string | undefined) {
   const locale = Object.keys(Locales).find((supportedLocale) => {
     return userLocale?.includes(supportedLocale)
   }) as LocaleCode | undefined
@@ -43,15 +43,17 @@ export function findSupportedLocaleFromAcceptedLanguages(acceptedLanguageHeader:
 
 if (import.meta.vitest) {
   describe(findSupportedLocaleFromAcceptedLanguages, () => {
-    it('should return the first accepted language', () => {
-      expect(findSupportedLocaleFromAcceptedLanguages('en-US,en;q=0.9,zh-TW;q=0.8,zh;q=0.7')).toEqual('en')
-      expect(findSupportedLocaleFromAcceptedLanguages('es-br;q=0.8,en-US,en;q=0.6,')).toEqual('es')
-      expect(findSupportedLocaleFromAcceptedLanguages('zh-TW;q=0.8,zh;q=0.7,en-US,en;q=0.6,')).toEqual('en')
+    it('return shortened (acceptable) form of dialect', () => {
+      const acceptedLanguageHeader = 'en-US,en;q=0.9,zh-TW;q=0.8,zh;q=0.7'
+      expect(findSupportedLocaleFromAcceptedLanguages(acceptedLanguageHeader)).toEqual('en')
+    })
+
+    it('returns 2nd accepted if 1st not supported', () => {
+      expect(findSupportedLocaleFromAcceptedLanguages('zh-TW,en-GB')).toEqual('en')
     })
 
     it('handles null header', () => {
-      const actual = findSupportedLocaleFromAcceptedLanguages(null)
-      expect(actual).toEqual(undefined)
+      expect(findSupportedLocaleFromAcceptedLanguages(null)).toEqual(undefined)
     })
   })
 }

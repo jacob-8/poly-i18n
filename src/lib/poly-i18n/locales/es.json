@@ -1,0 +1,16 @@
+{
+  "page": {
+    "dir": "ltr"
+  },
+  "hello": {
+    "world": "¡Hola mundo!",
+    "person": "¡Hola {name}!"
+  },
+  "fruit": {
+    "apple": "manzana",
+    "banana": ""
+  },
+  "say": {
+    "hi": "Dar un saludo traducido"
+  }
+}

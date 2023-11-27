@@ -1,0 +1,1 @@
+This page will be more interesting if you turn on all three languages (includes LTR and RTL) using the language selector in the sidebar. You can also view this page standalone by just going to the [root route (/)](/).

@@ -6,6 +6,7 @@ declare global {
 		// interface Locals {}
 		interface PageData {
       t: Awaited<ReturnType<typeof import('$lib/poly-i18n').getTranslator>>;
+			i18n: typeof import('$lib/poly-i18n/locales/en.json'); // optional direct method
       locale: import('$lib/poly-i18n/locales').LocaleCode;
     }
 		// interface Platform {}

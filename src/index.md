@@ -2,12 +2,14 @@
 
 Do-it-yourself, simple, framework agnostic i18n with type safety in under 100 lines. [Try it out](https://poly-i18n.vercel.app), learn how to [get started](/kitbook/docs/0-set-locales) or [play with it in Stackblitz](https://stackblitz.com/github/jacob-8/poly-i18n).
 
+![Type safety and intellisense](/type-safety.png)
+
 ## Features
 
-✅ Minimal - less than 100 lines of code not counting your project setup (desired locales and translation strings). It's not a library, just copy-paste into your project and use what you need\
+✅ Minimal - less than 100 lines of code. It's not a library, just copy-paste into your project and adjust to your needs\
 ✅ SSR safe: does not use shared server side stores to fix the race condition problems of [`svelte-i18n`](https://github.com/kaisermann/svelte-i18n), [`svelte-intl-precompile`](https://github.com/cibernox/svelte-intl-precompile) and [`sveltekit-i18n`](https://github.com/sveltekit-i18n)\
-✅ Each server instance only loads translations once, the first time they are needed. They next time they are needed, they are already in memory\
-✅ Platform agnostic - built for SvelteKit, but works anywhere\
+✅ Efficient: Each server instance only loads translations the first time they are needed. They next time they are needed, they are already in memory\
+✅ Platform agnostic: built for SvelteKit, but works anywhere\
 ✅ Use local data or a remote API for translation strings - you write the file import\
 ✅ Type-safe translation strings without a build step if using local data, you will get TS errors if you enter an invalid key or have a missing translation string\
 ✅ Use a fallback locale to progressively translate your site\
@@ -20,7 +22,7 @@ Do-it-yourself, simple, framework agnostic i18n with type safety in under 100 li
 
 I use [`svelte-i18n`](https://github.com/kaisermann/svelte-i18n) and recently started multilingual [screenshot regression testing](https://kitbook.vercel.app/docs/7-visual-regression-testing) using Kitbook and from a large number of flaky tests solely due to showing the wrong language at random times the underlying race condition problem in the current i18n offerings for SvelteKit became obvious. Previously I only noticed it every few months, but as our user base grew more reports came in about the funny language flashes as the client hydrates and switches to the correct language.
 
-The problem lies in the way [`svelte-i18n`](https://github.com/kaisermann/svelte-i18n)'s default usage uses [shared state on the server (a bad idea in SvelteKit)](https://kit.svelte.dev/docs/state-management#avoid-shared-state-on-the-server) is causing lots of race condition issues as requests from 11 different languages come in all at once. There is a [workaround](https://github.com/kaisermann/svelte-i18n/issues/165#issuecomment-1784214747) that would be implemented like this:
+The problem lies in the way [`svelte-i18n`](https://github.com/kaisermann/svelte-i18n)'s uses shared state on the server. [This is a bad idea in SvelteKit](https://kit.svelte.dev/docs/state-management#avoid-shared-state-on-the-server) because it is causing lots of race condition issues as requests from 11 different languages come in all at once. There is a [workaround](https://github.com/kaisermann/svelte-i18n/issues/165#issuecomment-1784214747) that would be implemented like this:
 
 ```svelte
 <script lang="ts">
@@ -37,8 +39,6 @@ Then [`svelte-intl-precompile`](https://github.com/cibernox/svelte-intl-precompi
 
 [`sveltekit-i18n`](https://github.com/sveltekit-i18n) also has the [same problem](https://github.com/sveltekit-i18n/lib/issues/106) if implemented as instructed. The [solution](https://github.com/sveltekit-i18n/lib/issues/106#issuecomment-1535196388) there is also to instantiate a new instance for each request.
 
-After looking through each, I realized they all contained a lot of code not applicable to my project, none are designed to be used in a method that instantiates a new instance for each request, and that the i18n code needed to handle my i18n needs was really quite simple, less than 100 lines. Take a look and see if it's what you need for your project.
+After looking through each, I realized they all contained a lot of code not applicable to my project, none are designed to be used in a method that instantiates a new instance for each request, and that the i18n code needed to handle my i18n needs was really quite simple, less than 100 lines. Take a look and see if it's what you need for your project. The hope is that this project can foster greater understanding of i18n in SvelteKit and spur all libraries going forward to isolate locale choice by request.
 
-## TODO
-
-Bilingual language support to show two languages side-by-side for language learners who are jumping to a new language
+[Get started >>](/kitbook/docs/0-set-locales)
