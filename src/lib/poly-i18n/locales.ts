@@ -7,29 +7,6 @@ export enum Locales {
 export type LocaleCode = keyof typeof Locales
 export const DEFAULT_LOCALE = 'en'
 
-export function getSupportedLocale(userLocale: string | undefined) {
-  const locale = Object.keys(Locales).find((supportedLocale) => {
-    return userLocale?.includes(supportedLocale)
-  }) as LocaleCode | undefined
-  return locale
-}
-
-if (import.meta.vitest) {
-  describe(getSupportedLocale, () => {
-    test('returns supported locale', () => {
-      expect(getSupportedLocale('es')).toBe('es')
-    })
-
-    test('returns undefined for unsupported locale', () => {
-      expect(getSupportedLocale('xx')).toBe(undefined)
-    })
-
-    test('returns basic locale for locale with region code', () => {
-      expect(getSupportedLocale('en-US')).toBe('en')
-    })
-  })
-}
-
 export function findSupportedLocaleFromAcceptedLanguages(acceptedLanguageHeader: string | null) {
   const locales = acceptedLanguageHeader
     ?.split(',')
@@ -54,6 +31,29 @@ if (import.meta.vitest) {
 
     it('handles null header', () => {
       expect(findSupportedLocaleFromAcceptedLanguages(null)).toEqual(undefined)
+    })
+  })
+}
+
+export function getSupportedLocale(userLocale: string | undefined) {
+  const locale = Object.keys(Locales).find((supportedLocale) => {
+    return userLocale?.includes(supportedLocale)
+  }) as LocaleCode | undefined
+  return locale
+}
+
+if (import.meta.vitest) {
+  describe(getSupportedLocale, () => {
+    test('returns supported locale', () => {
+      expect(getSupportedLocale('es')).toBe('es')
+    })
+
+    test('returns undefined for unsupported locale', () => {
+      expect(getSupportedLocale('xx')).toBe(undefined)
+    })
+
+    test('returns basic locale for locale with region code', () => {
+      expect(getSupportedLocale('en-US')).toBe('en')
     })
   })
 }
