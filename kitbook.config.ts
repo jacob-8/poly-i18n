@@ -1,4 +1,5 @@
 import { defineConfig } from 'kitbook/defineConfig'
+import { Locales } from './src/lib/poly-i18n/locales'
 
 export default defineConfig({
   title: 'Poly I18n',
@@ -15,20 +16,7 @@ export default defineConfig({
       height: 1024,
     },
   ],
-  languages: [
-    {
-      name: 'English',
-      code: 'en',
-    },
-    {
-      name: 'Español',
-      code: 'es',
-    },
-    {
-      name: 'עברית',
-      code: 'he',
-    },
-  ],
+  languages: Object.entries(Locales).map(([code, name]) => ({ code, name })),
   addLanguageToUrl: ({ code, url }) => url.replace(/^.[^/]+/, `/${code}`),  
   kitbookRoute: '/[locale=locale]/kitbook',
   githubURL: 'https://github.com/jacob-8/poly-i18n',
