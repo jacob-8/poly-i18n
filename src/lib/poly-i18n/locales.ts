@@ -26,7 +26,7 @@ if (import.meta.vitest) {
     })
 
     it('returns 2nd accepted if 1st not supported', () => {
-      expect(findSupportedLocaleFromAcceptedLanguages('zh-TW,en-GB')).toEqual('en')
+      expect(findSupportedLocaleFromAcceptedLanguages('foo,en-GB')).toEqual('en')
     })
 
     it('handles null header', () => {
@@ -36,10 +36,9 @@ if (import.meta.vitest) {
 }
 
 export function getSupportedLocale(userLocale: string | undefined) {
-  const locale = Object.keys(Locales).find((supportedLocale) => {
+  return Object.keys(Locales).find((supportedLocale) => {
     return userLocale?.includes(supportedLocale)
   }) as LocaleCode | undefined
-  return locale
 }
 
 if (import.meta.vitest) {
