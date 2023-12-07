@@ -19,6 +19,10 @@ usageMatchRegex:
   - "[^\\\\\w\\\\d]t\\\\(['\\\"`]({key})['\\\"`]" # i18n-ally's default example of how to detect `t("your.i18n.keys")` - the `{key}` will be placed by a proper keypath matching regex, you can ignore it and use your own matching rules as well
   # - "[^\\\\w\\\\d]i18n\\\\.(.+?)[^\\\\w\\\\.]" # 👈 use this if you want to match the alternative direct method demoed in this repo, as in `$page.data.i18n.hello.world`
 
+refactorTemplates:
+  - "{$page.data.t(\"$1\")}"
+  # - "{$page.data.i18n.$1}" # 👈 use this if you want to match the alternative direct method demoed in this repo, as in `$page.data.i18n.hello.world`
+
 # If set to true, only enables this custom framework (will disable all built-in frameworks)
 monopoly: true
 ```
