@@ -19,6 +19,6 @@ export default defineConfig({
   languages: Object.entries(Locales).map(([code, name]) => ({ code, name })),
   addLanguageToUrl: ({ code, url }) => url.replace(/^.[^/]+/, `/${code}`),  
   kitbookRoute: '/[locale=locale]/kitbook',
-  githubURL: 'https://github.com/jacob-8/poly-i18n',
+  githubURL: 'https://github.com/jacob-8/poly-i18n/tree/main',
   expandTree: true,
 })
