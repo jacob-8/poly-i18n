@@ -1,8 +1,8 @@
 import en from './locales/en.json'
-import type { LocaleCode } from './locales'
+import { DEFAULT_LOCALE, type LocaleCode } from './locales'
 import type { TranslationKeys } from './types'
 import { interpolate } from './interpolate'
-import { dev } from '$app/environment'
+import { browser, dev } from '$app/environment'
 import { merge } from './merge'
 
 const loadedTranslations: Record<string, typeof en> = {
@@ -25,16 +25,17 @@ export async function getTranslator(locale: LocaleCode) {
       return interpolate(localeResult, options?.values)
     console.warn(`Missing ${locale} translation for ${key}`)
 
-    // @ts-expect-error - same issue as above
-    const fallbackResult = loadedTranslations.en[section]?.[item]
-    if (fallbackResult)
-      return interpolate(fallbackResult, options?.values)
+    if (locale !== DEFAULT_LOCALE) {
+      // @ts-expect-error - same issue as above
+      const fallbackResult = loadedTranslations[DEFAULT_LOCALE][section]?.[item]
+      if (fallbackResult)
+        return interpolate(fallbackResult, options?.values)
+      console.warn(`Missing fallback for: ${key}`)
+    }
 
-    const error = `Missing English for: ${key}`
-    if (dev)
-      throw new Error(error)
+    if (dev && browser)
+      throw new Error(`Missing i18n key: ${key}`)
 
-    console.error(error)
     return key
   }
 }
@@ -47,5 +48,5 @@ export async function getDirectTranslator(locale: LocaleCode) {
   if (!loadedTranslations[locale])
     loadedTranslations[locale] = await import(`./locales/${locale}.json`)
 
-  return merge({ fallback: en, translation: loadedTranslations[locale]})
+  return merge({ fallback: en, translation: loadedTranslations[locale] })
 }
